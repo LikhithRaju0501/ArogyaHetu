@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { StyleSheet, View, ActivityIndicator } from 'react-native';
+import { Text } from 'react-native-elements';
 import { SafeAreaView } from 'react-navigation';
 import * as Location from 'expo-location';
 import MapView, { Circle } from 'react-native-maps';
@@ -7,12 +8,12 @@ import MapView, { Circle } from 'react-native-maps';
 const UserLocation = () => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-  const [currentLocation, setCurrentLocation] = useState({
-    latitude: 13.02222,
-    longitude: 77.6666,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
-  });
+  const [currentLocation, setCurrentLocation] = useState(null);
+  //   latitude: 13.02222,
+  //   longitude: 77.6666,
+  //   latitudeDelta: 0.01,
+  //   longitudeDelta: 0.01,
+  //);
 
   useEffect(() => {
     (async () => {
@@ -21,7 +22,11 @@ const UserLocation = () => {
         setErrorMsg('Permission to access location was denied');
       }
 
-      let location = await Location.getCurrentPositionAsync({});
+      let location = await Location.getCurrentPositionAsync({
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 10000,
+      });
       setLocation(location);
       setCurrentLocation({
         latitude: location.coords.latitude,
@@ -50,18 +55,25 @@ const UserLocation = () => {
   return (
     <SafeAreaView forceInset={{ top: 'always' }} style={styles.container}>
       <Text>{JSON.stringify(currentLocation)}</Text>
-      <MapView
-        style={{ height: 300 }}
-        initialRegion={currentLocation}
-        region={currentLocation}
-      >
-        <Circle
-          center={currentLocation}
-          radius={50}
-          strokeColor='rgba(158,158,255,1.0)'
-          fillColor='rgba(158,158,255,0.3)'
-        />
-      </MapView>
+      {currentLocation ? (
+        <MapView
+          style={{ height: 300 }}
+          initialRegion={currentLocation}
+          region={currentLocation}
+        >
+          <Circle
+            center={currentLocation}
+            radius={50}
+            strokeColor='rgba(158,158,255,1.0)'
+            fillColor='rgba(158,158,255,0.3)'
+          />
+        </MapView>
+      ) : (
+        <View>
+          <Text h3>Wait until we fetch your Location</Text>
+          <ActivityIndicator size='large' />
+        </View>
+      )}
     </SafeAreaView>
   );
 };
