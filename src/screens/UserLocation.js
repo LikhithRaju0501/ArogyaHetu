@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import * as Location from 'expo-location';
 import MapView, { Circle } from 'react-native-maps';
@@ -46,19 +46,7 @@ const UserLocation = () => {
     longitudeDelta: 0.01,
   };
 
-  // console.log(currentLocation);
-  // if (location) {
-  //   //  console.log(location.coords.latitude);
-  //   // console.log(updatedLocation);
-  //   updatedLocation = {
-  //     latitude: location.coords.latitude,
-  //     longitude: location.coords.longitude,
-  //     latitudeDelta: 0.01,
-  //     longitudeDelta: 0.01,
-  //   };
-  // }
-  // console.log(updatedLocation);
-
+  console.log(currentLocation);
   return (
     <SafeAreaView forceInset={{ top: 'always' }} style={styles.container}>
       <Text>{JSON.stringify(currentLocation)}</Text>
@@ -69,7 +57,7 @@ const UserLocation = () => {
       >
         <Circle
           center={currentLocation}
-          radius={100}
+          radius={50}
           strokeColor='rgba(158,158,255,1.0)'
           fillColor='rgba(158,158,255,0.3)'
         />

@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { Entypo } from '@expo/vector-icons';
-//import { createStackNavigator } from '@react-navigation/stack';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -22,13 +21,15 @@ const App = () => {
             let iconName;
 
             if (route.name === 'State') {
-              iconName = 'database';
+              iconName = 'chart-area';
             } else if (route.name === 'Details') {
-              iconName = 'location-pin';
+              iconName = 'hospital-alt';
+            } else if (route.name === 'Location') {
+              iconName = 'location-arrow';
             }
 
             // You can return any component that you like here!
-            return <Entypo name={iconName} size={size} color={color} />;
+            return <FontAwesome5 name={iconName} size={24} color='black' />;
           },
         })}
         tabBarOptions={{
